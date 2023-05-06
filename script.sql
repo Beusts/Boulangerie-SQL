@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS `APPROVISIONNER` (
 --
 -- Dumping data for table `APPROVISIONNER`
 --
---semaine doit étre valide
+-- semaine doit étre valide
 INSERT INTO `APPROVISIONNER` (`IDMelange`, `SemaineAppro`, `QuantiteMélange`) VALUES
 (2, 53, 300);
 
@@ -120,8 +120,8 @@ CREATE TABLE IF NOT EXISTS `LIVRER` (
   `DateLivraison` date NOT NULL,
   `NombreDePains` int(6) NOT NULL,
   PRIMARY KEY (`IDCli`,`IDPain`,`DateLivraison`),
-  FOREIGN KEY (`IDCli`) REFERENCES CLIENT(`IDCli`),
-  FOREIGN KEY (`IDPain`) REFERENCES PAIN(`IDPain`),
+  FOREIGN KEY (`IDCli`) REFERENCES CLIENTE(`IDCli`),
+  FOREIGN KEY (`IDPain`) REFERENCES PAIN(`IDPain`)
 );
 
 --
