@@ -19,15 +19,15 @@ public class Boulangerie {
             case 2:
                 ajouterProduit();
                 break;
-            /*case 3:
-                ajouterCommande();
+            case 3:
+                ajouterLivraison();
                 break;
             case 4:
                 ajouterMelange();
                 break;
             case 5:
                 ajouterApprovisionnement();
-                break;*/
+                break;
             default:
                 Ecran.afficherln("Erreur de saisie");
                 ajouter();
@@ -96,7 +96,36 @@ public class Boulangerie {
     public static void ajouterViennoiserie(){
 
     }
-    public static void main(String[] args) {
 
+    public static void ajouterLivraison(){
+        int connexion = BD.ouvrirConnexion(adresse, bd, login,password);
+        int res, idCli, idPain, nbPain;
+        String date;
+
+        // creation de la requête
+        Ecran.afficherln("Saisir l'id du client");
+        idCli = Clavier.saisirInt();
+        Ecran.afficherln("Saisir l'id du pain");
+        idPain = Clavier.saisirInt();
+        Ecran.afficherln("Saisir la date de livraison");
+        date = Clavier.saisirString();
+        Ecran.afficherln("Saisir le nombre de pain");
+        nbPain = Clavier.saisirInt();
+        String sql = "INSERT INTO LIVRER VALUES ("+ idCli +", "+idPain+", '"+date+"', "+nbPain+")";
+
+        // envoi de la requête
+        res = BD.executerUpdate(connexion, sql);
+        BD.fermerResultat(res);
+        BD.fermerConnexion(connexion);
+    }
+    public static void ajouterMelange(){
+
+    }
+
+    public static void  ajouterApprovisionnement(){
+
+    }
+    public static void main(String[] args) {
+        ajouterLivraison();
     }
 }
