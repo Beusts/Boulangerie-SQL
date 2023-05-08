@@ -96,7 +96,7 @@ INSERT INTO `PAIN` (`IDPain`, `DescPain`, `PrixPainHT`, `IDMelange`) VALUES
 CREATE TABLE IF NOT EXISTS `APPROVISIONNER` (
   `IDMelange` int(6) NOT NULL,
   `SemaineAppro` int(2) NOT NULL,
-  `QuantiteMélange` int(6) NOT NULL, 
+  `QuantiteMelange` int(6) NOT NULL,
   PRIMARY KEY (`IDMelange`,`SemaineAppro`),
   FOREIGN KEY (`IDMelange`) REFERENCES MELANGE(`IDMelange`)
 );
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `APPROVISIONNER` (
 -- Dumping data for table `APPROVISIONNER`
 --
 -- semaine doit étre valide
-INSERT INTO `APPROVISIONNER` (`IDMelange`, `SemaineAppro`, `QuantiteMélange`) VALUES
+INSERT INTO `APPROVISIONNER` (`IDMelange`, `SemaineAppro`, `QuantiteMelange`) VALUES
 (2, 53, 300);
 
 -- --------------------------------------------------------
