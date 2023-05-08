@@ -36,7 +36,7 @@ public class Boulangerie {
     }
     public static void ajouterClient(){
         int connexion = BD.ouvrirConnexion(adresse, bd, login,password);
-        int id;
+        int res, id;
         String nom, ville, adresse;
         // creation de la requête
 
@@ -46,16 +46,14 @@ public class Boulangerie {
         ville = Clavier.saisirString();
         Ecran.afficherln("Saisir l'adresse du client");
         adresse = Clavier.saisirString();
-        id = BD.executerUpdate(connexion, "UPDATE CLIENT");
-        String sql = "INSERT INTO CLIENT VALUES ("+id+", '"+nom+"', '"+ville+"', '"+adresse+"')";
+        id = BD.executerUpdate(connexion, "UPDATE CLIENTE SET IDCli = IDCli");
+        String sql = "INSERT INTO CLIENTE VALUES ("+ (id + 1) +", '"+nom+"', '"+adresse+"', '"+ville+"')";
         // envoi de la requête
-        int res = BD.executerUpdate(connexion, sql);
+        res = BD.executerUpdate(connexion, sql);
         BD.fermerResultat(res);
         BD.fermerConnexion(connexion);
     }
 
     public static void main(String[] args) {
-        int connexion = BD.ouvrirConnexion(adresse, bd, login,password);
-        BD.fermerConnexion(connexion);
     }
 }
