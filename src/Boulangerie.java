@@ -16,10 +16,10 @@ public class Boulangerie {
             case 1:
                 ajouterClient();
                 break;
-            /*case 2:
+            case 2:
                 ajouterProduit();
                 break;
-            case 3:
+            /*case 3:
                 ajouterCommande();
                 break;
             case 4:
@@ -38,8 +38,8 @@ public class Boulangerie {
         int connexion = BD.ouvrirConnexion(adresse, bd, login,password);
         int res, id;
         String nom, ville, adresse;
-        // creation de la requête
 
+        // creation de la requête
         Ecran.afficherln("Saisir le nom du client");
         nom = Clavier.saisirString();
         Ecran.afficherln("Saisir la ville du client");
@@ -48,12 +48,55 @@ public class Boulangerie {
         adresse = Clavier.saisirString();
         id = BD.executerUpdate(connexion, "UPDATE CLIENTE SET IDCli = IDCli");
         String sql = "INSERT INTO CLIENTE VALUES ("+ (id + 1) +", '"+nom+"', '"+adresse+"', '"+ville+"')";
+
         // envoi de la requête
         res = BD.executerUpdate(connexion, sql);
         BD.fermerResultat(res);
         BD.fermerConnexion(connexion);
     }
+    public static void ajouterProduit(){
+        int choix;
+        Ecran.afficherln("1. Ajouter de pain");
+        Ecran.afficherln("2. Ajouter de viennoiserie");
+        choix = Clavier.saisirInt();
+        switch (choix){
+            case 1:
+                ajouterPain();
+                break;
+            case 2:
+                ajouterViennoiserie();
+                break;
+            default:
+                Ecran.afficherln("Erreur de saisie");
+                ajouterProduit();
+                break;
+        }
+    }
+    public static void ajouterPain(){
+        int connexion = BD.ouvrirConnexion(adresse, bd, login,password);
+        int res, id;
+        String desc, melange;
+        double prix;
 
+        // creation de la requête
+        Ecran.afficherln("Saisir la description du pain");
+        desc = Clavier.saisirString();
+        Ecran.afficherln("Saisir l'id du melange du pain");
+        melange = Clavier.saisirString();
+        Ecran.afficherln("Saisir le prix du pain");
+        prix = Clavier.saisirDouble();
+        id = BD.executerUpdate(connexion, "UPDATE PAIN SET IDPain = IDPain");
+        String sql = "INSERT INTO PAIN VALUES ("+ (id + 1) +", '"+desc+"', "+prix+", '"+melange+"')";
+
+        // envoi de la requête
+        res = BD.executerUpdate(connexion, sql);
+        BD.fermerResultat(res);
+        BD.fermerConnexion(connexion);
+    }
+    public static void ajouterViennoiserie(){
+
+    }
     public static void main(String[] args) {
+
     }
 }
