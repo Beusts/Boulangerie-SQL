@@ -84,8 +84,8 @@ CREATE TABLE IF NOT EXISTS `PAIN` (
 
 INSERT INTO `PAIN` (`IDPain`, `DescPain`, `PrixPainHT`, `IDMelange`) VALUES
 (1, 'Pain de seigle', 5, 3),
-(2, 'baguette', 1, 1),
-(3, 'pain de campagne', 4.5, 2);
+(2, 'Baguette', 1, 1),
+(3, 'Pain de campagne', 4.5, 2);
 
 -- --------------------------------------------------------
 
