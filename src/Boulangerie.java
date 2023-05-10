@@ -1,8 +1,8 @@
 public class Boulangerie {
-    public static String adresse = "sql7.freemysqlhosting.net";
-    public static String bd = "sql7616392";
-    public static String login = "sql7616392";
-    public static String password = "7aqbrPxLPg";
+    public static String adresse = "sql7.freesqldatabase.com";
+    public static String bd = "sql7617285";
+    public static String login = "sql7617285";
+    public static String password = "2Rg7ywak4s";
 
     public static void ajouter(){
         int choix;
@@ -98,14 +98,26 @@ public class Boulangerie {
     }
     public static void ajouterLivraison(){
         int connexion = BD.ouvrirConnexion(adresse, bd, login,password);
-        int res, idCli, idPain, nbPain;
-        String date;
+        int res, idPain =0, nbPain, idCli = 0;
+        String date, nomCli, nomPain;
 
         // creation de la requête
-        Ecran.afficherln("Saisir l'id du client");
-        idCli = Clavier.saisirInt();
-        Ecran.afficherln("Saisir l'id du pain");
-        idPain = Clavier.saisirInt();
+        Ecran.afficherln("Saisir le nom du client");
+        nomCli = Clavier.saisirString();
+        res = BD.executerSelect(connexion, "SELECT IDCli FROM CLIENTE WHERE NomCli = '"+nomCli+"'");
+        while (BD.suivant(res)) {
+            idCli = BD.attributInt(res, "IDCli");
+        }
+        BD.fermerResultat(res);
+
+        Ecran.afficherln("Saisir le nom du pain");
+        nomPain = Clavier.saisirString();
+        res = BD.executerSelect(connexion, "SELECT IDPain FROM PAIN WHERE DescPain = '"+nomPain+"'");
+        while (BD.suivant(res)) {
+            idPain = BD.attributInt(res, "IDPain");
+        }
+        BD.fermerResultat(res);
+
         Ecran.afficherln("Saisir la date de livraison");
         date = Clavier.saisirString();
         Ecran.afficherln("Saisir le nombre de pain");
@@ -151,6 +163,7 @@ public class Boulangerie {
         BD.fermerResultat(res);
         BD.fermerConnexion(connexion);
     }
+
     public static void main(String[] args) {
         ajouter();
     }
