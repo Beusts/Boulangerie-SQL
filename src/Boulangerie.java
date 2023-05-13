@@ -1,8 +1,8 @@
 public class Boulangerie {
-    public static String adresse = "database.ejemw8z.mongodb.net";
-    public static String bd = "beusts";
-    public static String login = "beusts";
-    public static String password = "A5gRLTca8V2qsV4s";
+    public static String adresse = "sql7.freemysqlhosting.net";
+    public static String bd = "sql7616392";
+    public static String login = "sql7616392";
+    public static String password = "7aqbrPxLPg";
 
     public static void ajouter(){
         int choix;
