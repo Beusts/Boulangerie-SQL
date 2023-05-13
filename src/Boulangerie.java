@@ -7,7 +7,7 @@ public class Boulangerie {
     public static void ajouter() {
         int choix;
         Ecran.afficherln("1. Ajouter un client");
-        Ecran.afficherln("2. Ajouter un produit");
+        Ecran.afficherln("2. Ajouter un pain");
         Ecran.afficherln("3. Ajouter une commande");
         Ecran.afficherln("4. Ajouter un melange");
         Ecran.afficherln("5. Ajouter un approvisionnement");
@@ -18,7 +18,7 @@ public class Boulangerie {
                 ajouterClient();
                 break;
             case 2:
-                ajouterProduit();
+                ajouterPain();
                 break;
             case 3:
                 ajouterLivraison();
@@ -59,28 +59,6 @@ public class Boulangerie {
         BD.fermerConnexion(connexion);
     }
 
-    public static void ajouterProduit() {
-        int choix;
-        Ecran.afficherln("1. Ajouter de pain");
-        Ecran.afficherln("2. Ajouter de viennoiserie");
-        Ecran.afficherln("3. Quitter");
-        choix = Clavier.saisirInt();
-        switch (choix) {
-            case 1:
-                ajouterPain();
-                break;
-            case 2:
-                ajouterViennoiserie();
-                break;
-            case 3:
-                break;
-            default:
-                Ecran.afficherln("Erreur de saisie");
-                ajouterProduit();
-                break;
-        }
-    }
-
     public static void ajouterPain() {
         int connexion = BD.ouvrirConnexion(adresse, bd, login, password);
         int res, id, idMelange = 0;
@@ -105,10 +83,6 @@ public class Boulangerie {
         res = BD.executerUpdate(connexion, sql);
         BD.fermerResultat(res);
         BD.fermerConnexion(connexion);
-    }
-
-    public static void ajouterViennoiserie() {
-
     }
 
     public static void ajouterLivraison() {
@@ -191,14 +165,13 @@ public class Boulangerie {
     public static void afficher() {
         int choix;
         Ecran.afficherln("1. Afficher les pains");
-        Ecran.afficherln("2. Afficher les viennoiseries");
-        Ecran.afficherln("3. Afficher les melanges");
-        Ecran.afficherln("4. Afficher les livraisons");
-        Ecran.afficherln("5. Afficher les approvisionnements");
-        Ecran.afficherln("6. Afficher les clients");
-        Ecran.afficherln("7. Afficher les quantités de melanges nécessaire pour les commandes de la semaine prochaine");
-        Ecran.afficherln("8. Afficher facture");
-        Ecran.afficherln("9. Quitter");
+        Ecran.afficherln("2. Afficher les melanges");
+        Ecran.afficherln("3. Afficher les livraisons");
+        Ecran.afficherln("4. Afficher les approvisionnements");
+        Ecran.afficherln("5. Afficher les clients");
+        Ecran.afficherln("6. Afficher les quantités de melanges nécessaire pour les commandes de la semaine prochaine");
+        Ecran.afficherln("7. Afficher facture");
+        Ecran.afficherln("8. Quitter");
 
         choix = Clavier.saisirInt();
         switch (choix) {
@@ -206,27 +179,24 @@ public class Boulangerie {
                 afficherPain();
                 break;
             case 2:
-                afficherViennoiserie();
-                break;
-            case 3:
                 afficherMelange();
                 break;
-            case 4:
+            case 3:
                 afficherLivraison();
                 break;
-            case 5:
+            case 4:
                 afficherApprovisionnement();
                 break;
-            case 6:
+            case 5:
                 afficherClient();
                 break;
-            case 7:
+            case 6:
                 totalMelangeLivrer();
                 break;
-            case 8:
+            case 7:
                 afficherFacture();
                 break;
-            case 9:
+            case 8:
                 break;
             default:
                 Ecran.afficherln("Erreur de saisie");
@@ -247,22 +217,6 @@ public class Boulangerie {
             int prixPain = BD.attributInt(res, "PrixPainHT");
             int melange = BD.attributInt(res, "DescMelange");
             System.out.printf("%-10d | %-20s | %-10d | %-10d\n", idPain, descPain, prixPain, melange);
-        }
-        BD.fermerResultat(res);
-        BD.fermerConnexion(connexion);
-    }
-
-    public static void afficherViennoiserie() {
-        int connexion = BD.ouvrirConnexion(adresse, bd, login, password);
-        int res;
-        String sql = "SELECT * FROM VIENNOISERIE";
-        res = BD.executerSelect(connexion, sql);
-        System.out.printf("%-10s | %-20s | %-10s\n", "IDViennoiserie", "DescViennoiserie", "PrixViennoiserieHT");
-        while (BD.suivant(res)) {
-            int idViennoiserie = BD.attributInt(res, "IDViennoiserie");
-            String descViennoiserie = BD.attributString(res, "DescViennoiserie");
-            int prixViennoiserie = BD.attributInt(res, "PrixViennoiserieHT");
-            System.out.printf("%-10d | %-20s | %-10d\n", idViennoiserie, descViennoiserie, prixViennoiserie);
         }
         BD.fermerResultat(res);
         BD.fermerConnexion(connexion);
@@ -401,6 +355,5 @@ public class Boulangerie {
 
     public static void main(String[] args) {
         menu();
-        //dfad
     }
 }
