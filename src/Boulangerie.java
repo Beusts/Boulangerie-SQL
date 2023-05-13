@@ -316,7 +316,7 @@ public class Boulangerie {
         BD.fermerConnexion(connexion);
     }
 
-    public static void afficherClient(){
+    public static void afficherClient() {
         int connexion = BD.ouvrirConnexion(adresse, bd, login, password);
         int res;
         String sql = "SELECT * FROM CLIENT";
