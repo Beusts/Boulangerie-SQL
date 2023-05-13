@@ -4,7 +4,7 @@ public class Boulangerie {
     public static String login = "sql7617285";
     public static String password = "2Rg7ywak4s";
 
-    public static void ajouter(){
+    public static void ajouter() {
         int choix;
         Ecran.afficherln("1. Ajouter un client");
         Ecran.afficherln("2. Ajouter un produit");
@@ -12,7 +12,7 @@ public class Boulangerie {
         Ecran.afficherln("4. Ajouter un melange");
         Ecran.afficherln("5. Ajouter un approvisionnement");
         choix = Clavier.saisirInt();
-        switch (choix){
+        switch (choix) {
             case 1:
                 ajouterClient();
                 break;
@@ -34,8 +34,9 @@ public class Boulangerie {
                 break;
         }
     }
-    public static void ajouterClient(){
-        int connexion = BD.ouvrirConnexion(adresse, bd, login,password);
+
+    public static void ajouterClient() {
+        int connexion = BD.ouvrirConnexion(adresse, bd, login, password);
         int res, id;
         String nom, ville, adresse;
 
@@ -47,19 +48,20 @@ public class Boulangerie {
         Ecran.afficherln("Saisir l'adresse du client");
         adresse = Clavier.saisirString();
         id = BD.executerUpdate(connexion, "UPDATE CLIENTE SET IDCli = IDCli");
-        String sql = "INSERT INTO CLIENTE VALUES ("+ (id + 1) +", '"+nom+"', '"+adresse+"', '"+ville+"')";
+        String sql = "INSERT INTO CLIENTE VALUES (" + (id + 1) + ", '" + nom + "', '" + adresse + "', '" + ville + "')";
 
         // envoi de la requête
         res = BD.executerUpdate(connexion, sql);
         BD.fermerResultat(res);
         BD.fermerConnexion(connexion);
     }
-    public static void ajouterProduit(){
+
+    public static void ajouterProduit() {
         int choix;
         Ecran.afficherln("1. Ajouter de pain");
         Ecran.afficherln("2. Ajouter de viennoiserie");
         choix = Clavier.saisirInt();
-        switch (choix){
+        switch (choix) {
             case 1:
                 ajouterPain();
                 break;
@@ -72,8 +74,9 @@ public class Boulangerie {
                 break;
         }
     }
-    public static void ajouterPain(){
-        int connexion = BD.ouvrirConnexion(adresse, bd, login,password);
+
+    public static void ajouterPain() {
+        int connexion = BD.ouvrirConnexion(adresse, bd, login, password);
         int res, id, idMelange = 0;
         String desc, descMelange;
         double prix;
@@ -83,32 +86,34 @@ public class Boulangerie {
         desc = Clavier.saisirString();
         Ecran.afficherln("Saisir la des description du melange du pain");
         descMelange = Clavier.saisirString();
-        res = BD.executerSelect(connexion, "SELECT IDMelange FROM MELANGE WHERE DescMelange = '"+descMelange+"'");
+        res = BD.executerSelect(connexion, "SELECT IDMelange FROM MELANGE WHERE DescMelange = '" + descMelange + "'");
         while (BD.suivant(res)) {
             idMelange = BD.attributInt(res, "IDMelange");
         }
         Ecran.afficherln("Saisir le prix du pain");
         prix = Clavier.saisirDouble();
         id = BD.executerUpdate(connexion, "UPDATE PAIN SET IDPain = IDPain");
-        String sql = "INSERT INTO PAIN VALUES ("+ (id + 1) +", '"+desc+"', "+prix+", "+idMelange+")";
+        String sql = "INSERT INTO PAIN VALUES (" + (id + 1) + ", '" + desc + "', " + prix + ", " + idMelange + ")";
 
         // envoi de la requête
         res = BD.executerUpdate(connexion, sql);
         BD.fermerResultat(res);
         BD.fermerConnexion(connexion);
     }
-    public static void ajouterViennoiserie(){
+
+    public static void ajouterViennoiserie() {
 
     }
-    public static void ajouterLivraison(){
-        int connexion = BD.ouvrirConnexion(adresse, bd, login,password);
-        int res, idPain =0, nbPain, idCli = 0;
+
+    public static void ajouterLivraison() {
+        int connexion = BD.ouvrirConnexion(adresse, bd, login, password);
+        int res, idPain = 0, nbPain, idCli = 0;
         String date, nomCli, nomPain;
 
         // creation de la requête
         Ecran.afficherln("Saisir le nom du client");
         nomCli = Clavier.saisirString();
-        res = BD.executerSelect(connexion, "SELECT IDCli FROM CLIENTE WHERE NomCli = '"+nomCli+"'");
+        res = BD.executerSelect(connexion, "SELECT IDCli FROM CLIENTE WHERE NomCli = '" + nomCli + "'");
         while (BD.suivant(res)) {
             idCli = BD.attributInt(res, "IDCli");
         }
@@ -116,7 +121,7 @@ public class Boulangerie {
 
         Ecran.afficherln("Saisir le nom du pain");
         nomPain = Clavier.saisirString();
-        res = BD.executerSelect(connexion, "SELECT IDPain FROM PAIN WHERE DescPain = '"+nomPain+"'");
+        res = BD.executerSelect(connexion, "SELECT IDPain FROM PAIN WHERE DescPain = '" + nomPain + "'");
         while (BD.suivant(res)) {
             idPain = BD.attributInt(res, "IDPain");
         }
@@ -126,15 +131,16 @@ public class Boulangerie {
         date = Clavier.saisirString();
         Ecran.afficherln("Saisir le nombre de pain");
         nbPain = Clavier.saisirInt();
-        String sql = "INSERT INTO LIVRER VALUES ("+ idCli +", "+idPain+", '"+date+"', "+nbPain+")";
+        String sql = "INSERT INTO LIVRER VALUES (" + idCli + ", " + idPain + ", '" + date + "', " + nbPain + ")";
 
         // envoi de la requête
         res = BD.executerUpdate(connexion, sql);
         BD.fermerResultat(res);
         BD.fermerConnexion(connexion);
     }
-    public static void ajouterMelange(){
-        int connexion = BD.ouvrirConnexion(adresse, bd, login,password);
+
+    public static void ajouterMelange() {
+        int connexion = BD.ouvrirConnexion(adresse, bd, login, password);
         int res, id;
         String desc;
 
@@ -142,15 +148,16 @@ public class Boulangerie {
         Ecran.afficherln("Saisir la description du melange");
         desc = Clavier.saisirString();
         id = BD.executerUpdate(connexion, "UPDATE MELANGE SET IDMelange = IDMelange");
-        String sql = "INSERT INTO MELANGE VALUES ("+ (id + 1) +", '"+desc+"')";
+        String sql = "INSERT INTO MELANGE VALUES (" + (id + 1) + ", '" + desc + "')";
 
         //envoi de la requête
         res = BD.executerUpdate(connexion, sql);
         BD.fermerResultat(res);
         BD.fermerConnexion(connexion);
     }
-    public static void  ajouterApprovisionnement(){
-        int connexion = BD.ouvrirConnexion(adresse, bd, login,password);
+
+    public static void ajouterApprovisionnement() {
+        int connexion = BD.ouvrirConnexion(adresse, bd, login, password);
         int res, semaine, quantite;
         int idMelange = 0;
         String descMelange;
@@ -158,7 +165,7 @@ public class Boulangerie {
         // creation de la requête
         Ecran.afficherln("Saisir la description du melange du pain");
         descMelange = Clavier.saisirString();
-        res = BD.executerSelect(connexion, "SELECT IDMelange FROM MELANGE WHERE DescMelange = '"+descMelange+"'");
+        res = BD.executerSelect(connexion, "SELECT IDMelange FROM MELANGE WHERE DescMelange = '" + descMelange + "'");
         while (BD.suivant(res)) {
             idMelange = BD.attributInt(res, "IDMelange");
         }
@@ -167,20 +174,21 @@ public class Boulangerie {
         semaine = Clavier.saisirInt();
         Ecran.afficherln("Saisir la quantité de pain");
         quantite = Clavier.saisirInt();
-        String sql = "INSERT INTO APPROVISIONNER VALUES ("+ idMelange +", "+semaine+", "+quantite+")";
+        String sql = "INSERT INTO APPROVISIONNER VALUES (" + idMelange + ", " + semaine + ", " + quantite + ")";
 
         // envoi de la requête
         res = BD.executerUpdate(connexion, sql);
         BD.fermerResultat(res);
         BD.fermerConnexion(connexion);
     }
-    public static void totalMelangeLivrer(){
-        int connexion = BD.ouvrirConnexion(adresse, bd, login,password);
+
+    public static void totalMelangeLivrer() {
+        int connexion = BD.ouvrirConnexion(adresse, bd, login, password);
         int res;
         // Récupère le nombre de melange pour les commandes de la semaine prochaine
         String sql = "SELECT SUM(NombreDePains), DescMelange FROM LIVRER NATURAL JOIN PAIN NATURAL JOIN MELANGE WHERE DateLivraison " +
                 "BETWEEN CURRENT_DATE() AND (DATE_ADD(CURRENT_DATE(), INTERVAL 7 DAY)) GROUP BY IDMelange";
-        res = BD.executerSelect(connexion,sql);
+        res = BD.executerSelect(connexion, sql);
         Ecran.afficherln("Quantités de melanges nécessaire pour les commandes de la semaine prochaine :\n");
         //Affiche les quantités de melanges nécessaire pour les commandes de la semaine prochaine
         while (BD.suivant(res)) {
@@ -188,7 +196,6 @@ public class Boulangerie {
             String melange = BD.attributString(res, "DescMelange");
             Ecran.afficherln(melange + " | " + quantite);
         }
-
 
 
     }
