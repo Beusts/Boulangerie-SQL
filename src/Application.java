@@ -1,4 +1,4 @@
-public class Boulangerie {
+public class Application {
     public static String adresse = "sql7.freesqldatabase.com";
     public static String bd = "sql7617285";
     public static String login = "sql7617285";
