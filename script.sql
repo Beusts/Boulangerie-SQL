@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `APPROVISIONNER` (
 --
 -- semaine doit étre valide
 INSERT INTO `APPROVISIONNER` (`IDMelange`, `SemaineAppro`, `QuantiteMelange`) VALUES
-(2, 53, 300);
+(2, 50, 300);
 
 -- --------------------------------------------------------
 
