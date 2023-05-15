@@ -1,3 +1,5 @@
+//KALEMBA Noah et ERCOLANI Julian
+
 public class Application {
     public static String adresse = "sql7.freesqldatabase.com";
     public static String bd = "sql7617285";
