@@ -68,7 +68,7 @@ public class Boulangerie {
         // creation de la requête
         Ecran.afficherln("Saisir la description du pain");
         desc = Clavier.saisirString();
-        Ecran.afficherln("Saisir la des description du melange du pain");
+        Ecran.afficherln("Saisir la description du melange du pain");
         descMelange = Clavier.saisirString();
         res = BD.executerSelect(connexion, "SELECT IDMelange FROM MELANGE WHERE DescMelange = '" + descMelange + "'");
         while (BD.suivant(res)) {
@@ -143,7 +143,7 @@ public class Boulangerie {
         String descMelange;
 
         // creation de la requête
-        Ecran.afficherln("Saisir la description du melange du pain");
+        Ecran.afficherln("Saisir la description du melange");
         descMelange = Clavier.saisirString();
         res = BD.executerSelect(connexion, "SELECT IDMelange FROM MELANGE WHERE DescMelange = '" + descMelange + "'");
         while (BD.suivant(res)) {
@@ -152,6 +152,10 @@ public class Boulangerie {
 
         Ecran.afficherln("Saisir la semaine de l'approvisionnement");
         semaine = Clavier.saisirInt();
+        while (semaine < 1 || semaine > 52) {
+            Ecran.afficherln("Saisir la semaine de l'approvisionnement");
+            semaine = Clavier.saisirInt();
+        }
         Ecran.afficherln("Saisir la quantité de pain");
         quantite = Clavier.saisirInt();
         String sql = "INSERT INTO APPROVISIONNER VALUES (" + idMelange + ", " + semaine + ", " + quantite + ")";
@@ -215,8 +219,8 @@ public class Boulangerie {
             int idPain = BD.attributInt(res, "IDPain");
             String descPain = BD.attributString(res, "DescPain");
             int prixPain = BD.attributInt(res, "PrixPainHT");
-            int melange = BD.attributInt(res, "DescMelange");
-            System.out.printf("%-10d | %-20s | %-10d | %-10d\n", idPain, descPain, prixPain, melange);
+            String melange = BD.attributString(res, "DescMelange");
+            System.out.printf("%-10d | %-20s | %-10d | %-10s\n", idPain, descPain, prixPain, melange);
         }
         BD.fermerResultat(res);
         BD.fermerConnexion(connexion);
@@ -240,15 +244,15 @@ public class Boulangerie {
     public static void afficherLivraison() {
         int connexion = BD.ouvrirConnexion(adresse, bd, login, password);
         int res;
-        String sql = "SELECT * FROM LIVRER";
+        String sql = "SELECT * FROM LIVRER NATURAL JOIN PAIN NATURAL JOIN CLIENTE";
         res = BD.executerSelect(connexion, sql);
-        System.out.printf("%-10s | %-20s | %-10s | %-10s\n", "IDClient", "IDPain", "DateLivraison", "NombreDePains");
+        System.out.printf("%-10s | %-20s | %-15s | %-10s\n", "Client", "Pain", "DateLivraison", "NombreDePains");
         while (BD.suivant(res)) {
-            int idClient = BD.attributInt(res, "IDClient");
-            int idPain = BD.attributInt(res, "IDPain");
-            int dateLivraison = BD.attributInt(res, "DateLivraison");
+            String client = BD.attributString(res, "NomCli");
+            String pain = BD.attributString(res, "DescPain");
+            String dateLivraison = BD.attributString(res, "DateLivraison");
             int nombreDePains = BD.attributInt(res, "NombreDePains");
-            System.out.printf("%-10d | %-20d | %-10d | %-10d\n", idClient, idPain, dateLivraison, nombreDePains);
+            System.out.printf("%-10s | %-20s | %-15s | %-10d\n", client, pain, dateLivraison, nombreDePains);
         }
         BD.fermerResultat(res);
         BD.fermerConnexion(connexion);
@@ -257,14 +261,14 @@ public class Boulangerie {
     public static void afficherApprovisionnement() {
         int connexion = BD.ouvrirConnexion(adresse, bd, login, password);
         int res;
-        String sql = "SELECT * FROM APPROVISIONNER";
+        String sql = "SELECT * FROM APPROVISIONNER NATURAL JOIN MELANGE";
         res = BD.executerSelect(connexion, sql);
-        System.out.printf("%-10s | %-20s | %-20s\n", "IDMelange", "SemaineAppro", "QuantiteMelange");
+        System.out.printf("%-20s | %-15s | %-20s\n", "Melange", "SemaineAppro", "QuantiteMelange");
         while (BD.suivant(res)) {
-            int idMelange = BD.attributInt(res, "IDMelange");
+            String idMelange = BD.attributString(res, "DescMelange");
             int semaineAppro = BD.attributInt(res, "SemaineAppro");
             int quantiteMelange = BD.attributInt(res, "QuantiteMelange");
-            System.out.printf("%-10d | %-20d | %-20d\n", idMelange, semaineAppro, quantiteMelange);
+            System.out.printf("%-20s | %-15d | %-20d\n", idMelange, semaineAppro, quantiteMelange);
         }
         BD.fermerResultat(res);
         BD.fermerConnexion(connexion);
@@ -273,15 +277,15 @@ public class Boulangerie {
     public static void afficherClient() {
         int connexion = BD.ouvrirConnexion(adresse, bd, login, password);
         int res;
-        String sql = "SELECT * FROM CLIENT";
+        String sql = "SELECT * FROM CLIENTE";
         res = BD.executerSelect(connexion, sql);
-        System.out.printf("%-10s | %-20s | %-10s | %-10s\n", "IDClient", "NomClient", "AdresseClient", "VilleClient");
+        System.out.printf("%-10s | %-10s | %-20s | %-10s\n", "IDClient", "NomClient", "AdresseClient", "VilleClient");
         while (BD.suivant(res)) {
             int idClient = BD.attributInt(res, "IDCli");
             String nomClient = BD.attributString(res, "NomCli");
             String adresseClient = BD.attributString(res, "AdrCli");
             String villeClient = BD.attributString(res, "VilleCli");
-            System.out.printf("%-10d | %-20s | %-10s | %-10s\n", idClient, nomClient, adresseClient, villeClient);
+            System.out.printf("%-10d | %-10s | %-20s | %-10s\n", idClient, nomClient, adresseClient, villeClient);
         }
         BD.fermerResultat(res);
         BD.fermerConnexion(connexion);
@@ -297,18 +301,19 @@ public class Boulangerie {
         Ecran.afficherln("Quantités de melanges nécessaire pour les commandes de la semaine prochaine :\n");
         //Affiche les quantités de melanges nécessaire pour les commandes de la semaine prochaine
         while (BD.suivant(res)) {
-            int quantite = BD.attributInt(res, "SUM(NombreDePains)");
-            String melange = BD.attributString(res, "DescMelange");
-            Ecran.afficherln(melange + " | " + quantite);
+            int quantiteMelange = BD.attributInt(res, "SUM(NombreDePains)");
+            String descMelange = BD.attributString(res, "DescMelange");
+            System.out.printf("%-20s | %-20d\n", descMelange, quantiteMelange);
         }
-
-
+        BD.fermerResultat(res);
+        BD.fermerConnexion(connexion);
     }
 
     public static void afficherFacture() {
         int connexion = BD.ouvrirConnexion(adresse, bd, login, password);
         String nomCli;
         int res, idCli = 0;
+        float totalHT = 0;
 
         Ecran.afficherln("Saisir le nom du client");
         nomCli = Clavier.saisirString();
@@ -324,9 +329,13 @@ public class Boulangerie {
             String date = BD.attributString(res, "DateLivraison");
             String pain = BD.attributString(res, "DescPain");
             float prix = BD.attributLong(res, "PrixPainHT");
+            totalHT += prix;
             System.out.printf("%-15s | %-15s | %-10.2f | %.2f\n", date, pain, prix, prix * 1.055);
         }
 
+        System.out.printf("%-15s | %-15s | %-10.2f | %.2f\n", "Total", "", totalHT, totalHT * 1.055);
+        BD.fermerResultat(res);
+        BD.fermerConnexion(connexion);
     }
 
     public static void menu() {
@@ -339,9 +348,11 @@ public class Boulangerie {
         switch (choix) {
             case 1:
                 ajouter();
+                menu();
                 break;
             case 2:
                 afficher();
+                menu();
                 break;
             case 3:
                 break;
